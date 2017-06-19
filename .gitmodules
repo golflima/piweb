@@ -1,0 +1,6 @@
+[submodule "docker"]
+	path = contrib/tetraweb-docker
+	url = https://github.com/TetraWeb/docker.git
+[submodule "contrib/tetraweb-docker"]
+	path = contrib/tetraweb-docker
+	url = https://github.com/TetraWeb/docker.git
