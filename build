@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Clean docker images and copy newer ones
+mkdir -p docker
 rm -rf docker/*
 cp -r contrib/tetraweb-docker/php/* docker
 for file in docker/*; do
