@@ -9,9 +9,11 @@ for file in docker/*; do
     mv "${file}" "docker/php-$(basename ${file})"; 
 done
 
-# Change FROM to use Raspberry Pi images
+# Adapt TetraWeb/php images to Raspberry Pi 3 ...
 for file in $(find docker -name Dockerfile); do
-    sed -i 's,^FROM php:,FROM arm32v7/php:,g' ${file}
+    sed -i 's,^FROM php:,FROM arm32v7/php:,g' ${file}   # Use a base image for ARM
+    sed -i  's/x86_64/arm/g' ${file}                    # Change architecture to ARM
+    # sed -i 's/^&& docker-php-ext-configure ldap.*$//g' ${file}    # Remove LDAP extension, can't find libs for ARM
 done
 
 # Build images and send them to Docker Hub
@@ -20,7 +22,7 @@ basepath=$(pwd)
 for file in docker/*; do
     [[ -d "${file}" ]] || continue
     cd ${file}
-    docker build -t golflima/piweb:$(basename ${file})
+    docker build . -t golflima/piweb:$(basename ${file})
     docker push golflima/piweb:$(basename ${file})
     cd ${basepath}
 done
