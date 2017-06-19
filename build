@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Clean docker images and copy newer ones
+rm -rf docker/*
+cp -r contrib/tetraweb-docker/php/* docker
+for file in docker/*; do
+    [[ -d "${file}" ]] || continue
+    mv "${file}" "docker/php-$(basename ${file})"; 
+done
+
+# Change FROM to use Raspberry Pi images
+for file in $(find docker -name Dockerfile); do
+    sed -i 's,^FROM php:,FROM arm32v7/php:,g' ${file}
+done
+
+# Build images and send them to Docker Hub
+# Remember to login first ! 'docker login'
+basepath=$(pwd)
+for file in docker/*; do
+    [[ -d "${file}" ]] || continue
+    cd ${file}
+    docker build -t golflima/piweb:$(basename ${file})
+    docker push golflima/piweb:$(basename ${file})
+    cd ${basepath}
+done

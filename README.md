@@ -1,2 +1,2 @@
-# piweb-php
-Docker images for CI with PHP built for Raspberry Pi 3
+# piweb
+Docker images for CI built for Raspberry Pi 3
