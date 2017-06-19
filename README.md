@@ -5,8 +5,7 @@ Docker images for CI built for Raspberry Pi 3
 
 1. `git clone https://github.com/golflima/piweb.git`
 2. `cd piweb`
-3. `git submodule init`
-4. (optional) `git submodule update`
+3. `git submodule update --init --recursive`
 5. `./build`
 
 ## Use these images in your Dockerfiles
